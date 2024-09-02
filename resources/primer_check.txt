@@ -1,0 +1,11 @@
+Primer3 File - http://primer3.org
+P3_FILE_TYPE=settings
+
+P3_FILE_ID=User settings
+
+
+PRIMER_TASK=check_primers
+PRIMER_PICK_INTERNAL_OLIGO=0
+PRIMER_EXPLAIN_FLAG=1
+PRIMER_PICK_ANYWAY=1
+=
