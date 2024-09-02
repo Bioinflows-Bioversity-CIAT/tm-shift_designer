@@ -1,0 +1,2 @@
+variant_id	chrom	pos	ref	alt	assembly_id
+Pv21_49613701	Chr01	49613701	T	G	Pv21

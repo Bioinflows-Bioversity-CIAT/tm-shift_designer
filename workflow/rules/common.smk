@@ -89,12 +89,12 @@ def get_all_primers_outs_per_qtl(wildcards):
     ref_common = expand('results/{variant_id}/primer3/ref_allele/{variant_id}_{allele}_{sep}_{orient}.rev',
                         variant_id = wildcards.variant_id,
                         allele = 'ref',
-                        sep = range(1,25),
+                        sep = range(1,config['max_dist']),
                         orient = ['53','35'])
     ref_allele_specific = expand('results/{variant_id}/primer3/ref_allele/{variant_id}_{allele}_1_{orient}.for',
                         variant_id = wildcards.variant_id,
                         allele = 'ref',
-                        sep = range(1,25),
+                        sep = range(1,config['max_dist']),
                         orient = ['53','35'])
     alt_allele_specific = expand('results/{variant_id}/primer3/alt_allele/{variant_id}_{allele}_{sep}_{orient}_{primer_type}_out',
                         variant_id = wildcards.variant_id,

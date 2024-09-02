@@ -1,0 +1,2 @@
+assembly_id	path
+Pv21	data/Pvulgaris_442_v2.0_Chr01.fa.gz

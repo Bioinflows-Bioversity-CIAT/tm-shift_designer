@@ -120,6 +120,14 @@ class Allele_specific_space():
             for primer in values:
                 primer.read_alternative()
 
+                # Add the GC-rich tail according to temperature
+                if primer.tm >= primer.alternative.tm:
+                    primer.sequence = "gcgggcagggcggc" + primer.sequence
+                    primer.alternative.sequence = "gcgggc" + primer.alternative.sequence
+                else:
+                    primer.sequence = "gcgggc" + primer.sequence
+                    primer.alternative.sequence = "gcgggcagggcggc" + primer.alternative.sequence
+
                 data = [primer.qtl_name, primer.primer_id,primer.sequence,primer.start_pos,
                         primer.length,primer.GC_content,float(primer.tm),
                         primer.self_any,primer.self_end,
@@ -318,7 +326,8 @@ class main():
                              'sequence_ref','sequence_alt','sequence_common',
                              'distance_common','amplicon_size_ref','amplicon_size_alt']
             out_merged = merged[order_columns]
-            out_merged = out_merged.sort_values(['quality_ref', 'quality_common'])
+            out_merged['Tm_diff'] = abs(out_merged['tm_ref'] - out_merged['tm_alt'])
+            out_merged = out_merged.sort_values(['Tm_diff', 'quality_ref', 'quality_common'])
             stacked_df = pd.concat(stacked_list, ignore_index=True)
 
             os.mkdir(args.outdir)

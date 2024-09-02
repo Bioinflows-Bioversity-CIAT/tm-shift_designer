@@ -1,0 +1,10 @@
+configfile: "config/config.yaml"
+
+module tm-shift_designer:
+    snakefile:
+        # TODO replace <release> with desired release
+        "https://github.com/snakemake-workflows/snakemake-workflows/snakemake-workflow-template/raw/<release>/Snakefile"
+    config:
+        config
+
+use rule * from tm-shift_designer
