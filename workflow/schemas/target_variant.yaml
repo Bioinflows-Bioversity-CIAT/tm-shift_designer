@@ -1,0 +1,33 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+description: row of the target_variants.txt, representing an individual variant
+type: object
+properties:
+  variant_id:
+    type: string
+    description: variant id
+  chrom:
+    type: string
+    description: Chromosome, scaffold or contig name where the target variant is located
+  pos:
+    type: integer
+    minimum: 1
+    description: Physically position along given chromosome, scaffold or contig where the target variant is located 
+  ref:
+    type: string
+    description: Reference allele of target variant
+  alt:
+    type: string
+    description: Alternative allele of target variant
+  assembly_id:
+    type: string
+    description: Assembly id where the target variant was discovered
+
+required:
+  - variant_id
+  - chrom
+  - pos
+  - ref
+  - alt
+  - assembly_id
+
+

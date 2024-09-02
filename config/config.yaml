@@ -1,0 +1,3 @@
+assemblies_units_path: config/assembly_units.txt
+target_variants_path: config/target_variants.txt
+window_length: 50

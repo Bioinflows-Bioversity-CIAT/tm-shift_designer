@@ -1,4 +1,11 @@
-# Main entrypoint of the workflow. 
-# Please follow the best practices: 
-# https://snakemake.readthedocs.io/en/stable/snakefiles/best_practices.html,
-# in particular regarding the standardized folder structure mentioned there. 
+include: "rules/common.smk"
+
+print("snakefile")
+rule all:
+    input:
+        primers = get_all_primers()
+
+
+include: "rules/sequence_processing.smk"
+include: "rules/primer_search.smk"
+include: "rules/primer_selection.smk"

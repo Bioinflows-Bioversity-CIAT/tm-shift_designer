@@ -1,0 +1,16 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+description: row of the assembly_units.txt, representing an individual assembly
+type: object
+properties:
+  assembly_id:
+    type: string
+    description: assembly id
+  path:
+    type: string
+    description: Path where the assembly fasta is located
+
+required:
+  - assembly_id
+  - path
+
+
