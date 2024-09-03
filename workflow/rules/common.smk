@@ -3,7 +3,6 @@ import pandas as pd
 import glob as glob
 import os
 
-
 # Snakemake configuration
 configfile: "config/config.yaml"
 
@@ -33,8 +32,6 @@ assemblies.set_index("assembly_id", inplace = True, drop=False)
 variants.set_index("variant_id", inplace = True,drop=False)
 
 # UTIL FUNCTIONS
-
-
 
 def get_variant_info(wildcards):
     info = variants.loc[wildcards.variant_id]
@@ -104,58 +101,10 @@ def get_all_primers_outs_per_qtl(wildcards):
                         primer_type = 'for')
     return ref_common + ref_allele_specific + alt_allele_specific 
 
-def reverse_complement_fasta(input_file):
-    # Read the input FASTA file
-    sequence = read_fasta(input_file)
-    return reverse_complement(sequence)
-
-
-def read_fasta(file_path):
-    sequences = {}
-    current_id = None
-    current_seq = []
-
-    with open(file_path, 'r') as file:
-        for line in file:
-            line = line.strip()
-            if line.startswith('>'):
-                if current_id:
-                    sequences[current_id] = ''.join(current_seq)
-                current_id = line[1:]
-                current_seq = []
-            else:
-                current_seq.append(line)
-
-    if current_id:
-        sequences[current_id] = ''.join(current_seq)
-
-    return sequences[current_id]
-
-def reverse_complement(sequence):
-    return ''.join(complement_nucleotide.get(base, base) for base in reversed(sequence.upper()))
-
-
-def read_primer3_out(path):
-    # read table 
-    if os.path.exists(path):
-        table = pd.read_csv(path, delim_whitespace=True, skiprows=3, header=None)
-        columns = ['ID','sequence','pi','length','N','GC','Tm','self_any_th','self_end_th','harpin','quality']
-        table.columns = columns
-        return table
-    
 def get_alternative_input(wildcards):
     out_dir = checkpoints.build_primer3_input_primercheck.get(**wildcards).output.alt_input
-    input_files = glob.glob(out_dir + '/*.txt')
+    input_files = [os.path.join(out_dir,file) for file in os.listdir(out_dir) if file[-3:] == 'txt']
     return input_files
-
-
-# UTIL DICT
-complement_nucleotide = {
-    'A': 'T',
-    'T': 'A',
-    'G': 'C',
-    'C': 'G'
-}
 
 wildcard_constraints:
     variant_id = "|".join(variants['variant_id'].unique()),

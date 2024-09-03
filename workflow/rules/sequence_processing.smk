@@ -6,11 +6,13 @@ rule extract_roi:
         locus = lambda wildcards: get_variant_info(wildcards)
     output:
         fasta = 'results/{variant_id}/{variant_id}_ref.fasta'
+    log:
+        'results/log/samtools_faidx_{variant_id}'
     conda:
         '../envs/primer3.yaml'
     shell:
         """
-        samtools faidx {input.ref} {params[locus][chrom]}:{params[locus][pi]}-{params[locus][pf]} > {output.fasta}
+        samtools faidx {input.ref} {params[locus][chrom]}:{params[locus][pi]}-{params[locus][pf]} > {output.fasta} 2> {log}
         """
         
 rule get_alternative_roi:
@@ -19,7 +21,10 @@ rule get_alternative_roi:
     output:
         fasta = 'results/{variant_id}/{variant_id}_alt.fasta'
     params:
-        locus = lambda wildcards: get_variant_info(wildcards)
+        locus = lambda wildcards: get_variant_info(wildcards),
+        window_length = config['window_length']
+    log:
+        'results/log/get_alternative_roi_{variant_id}'
     conda:
         '../envs/biopython.yaml'
     shell:
@@ -27,6 +32,6 @@ rule get_alternative_roi:
         python workflow/scripts/utils.py get_alt_sequence {input.fasta} \
         {params[locus][ref]} \
         {params[locus][alt]} \
-        {config[window_length]} \
-        {output.fasta} 
+        {params[window_length]} \
+        {output.fasta} 2> {log}
         """
