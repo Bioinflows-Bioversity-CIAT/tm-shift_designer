@@ -27,11 +27,5 @@ rule get_alternative_roi:
         'results/log/get_alternative_roi_{variant_id}'
     conda:
         '../envs/biopython.yaml'
-    shell:
-        """
-        python workflow/scripts/utils.py get_alt_sequence {input.fasta} \
-        {params[locus][ref]} \
-        {params[locus][alt]} \
-        {params[window_length]} \
-        {output.fasta} 2> {log}
-        """
+    script:
+        '../scripts/get_alternative_sequence.py'

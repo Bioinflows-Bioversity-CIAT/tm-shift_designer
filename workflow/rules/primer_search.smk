@@ -17,17 +17,8 @@ rule build_primer3_input:
         'results/log/build_primer3_input_{variant_id}_{allele}_{sep}_{orient}.log'
     conda:
         '../envs/biopython.yaml'
-    shell:
-        """
-        python workflow/scripts/utils.py build_primer3_input \
-        {params[name]} \
-        {input.fasta} \
-        {params[target_pos]} \
-        {params[allele]} \
-        {params[orientation]} \
-        {params[sep]} \
-        {output.primer3_in} 2> {log}
-        """
+    script:
+        '../scripts/build_primer3_input.py'
             
 checkpoint build_primer3_input_primercheck:
     input:
@@ -49,18 +40,8 @@ checkpoint build_primer3_input_primercheck:
         'results/log/build_primer3_check_input_{variant_id}_{allele}_{sep}_{orient}_{primer_type}.log'
     conda:
         '../envs/biopython.yaml'
-    shell:
-        """
-        python workflow/scripts/utils.py build_primer3_check_primer \
-        {params[name]} \
-        {input.primer3_out} \
-        {input.fasta} \
-        {params[orientation]} \
-        {params[locus][ref]} \
-        {params[locus][alt]} \
-        {params[sep]} \
-        {output.alt_input} 2> {log}
-        """
+    script:
+        '../scripts/build_primer3_check_alt_input.py'
            
             
 rule primer3_search_alt:

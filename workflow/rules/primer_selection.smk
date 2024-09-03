@@ -5,11 +5,9 @@ rule select_primers:
         summary = directory('results/{variant_id}/summary'),
     log:
         'results/log/select_primers_{variant_id}.log'
+    params:
+        basedir = lambda wildcards: "results/{vid}/primer3".format(vid = wildcards.variant_id)
     conda:
         '../envs/biopython.yaml'
-    shell:
-        """
-        python workflow/scripts/select_primers_tm-shift_summarizer.py summarize {wildcards.variant_id} \
-        results/{wildcards.variant_id}/primer3 \
-        {output.summary} 2> {log}
-        """ 
+    script:
+        '../scripts/select_primers_tm-shift_summarizer.py'
