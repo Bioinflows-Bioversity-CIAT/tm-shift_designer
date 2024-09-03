@@ -6,3 +6,9 @@ target_variants_path: config/target_variants.txt
 window_length: 50
 # Maxmimun distance in pb to search common primers
 max_dist: 20
+
+# Primer3 preset settings for primer discriminative
+conf_primer_discriminative: data/primer_discriminative.txt
+
+# Primer3 preset settings for alternative primer check
+conf_primercheck: data/primer_check.txt

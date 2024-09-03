@@ -51,6 +51,8 @@ rule primer3_search_alt:
         out_dir = directory('results/{variant_id}/primer3/alt_allele/{variant_id}_{allele}_{sep}_{orient}_{primer_type}_out'),
     conda:
         '../envs/primer3.yaml'
+    params:
+        preset_conf = config['conf_primercheck']
     log:
         'results/log/primer3_check_input_{variant_id}_{allele}_{sep}_{orient}_{primer_type}.log'
     shell:
@@ -61,7 +63,7 @@ rule primer3_search_alt:
         for primer3_in in {input.alt_input}; do
             echo "${{primer3_in}}";
             primer3_core \
-            --p3_settings_file resources/primer_check.txt \
+            --p3_settings_file {params[preset_conf]} \
             ${{primer3_in}} 2>> {log} && \
             mv {wildcards.variant_id}_{wildcards.allele}_{wildcards.sep}_{wildcards.primer_type}*_{wildcards.orient}.for \
        {output.out_dir}
@@ -75,6 +77,8 @@ rule primer3_search:
         out = 'results/{variant_id}/primer3/ref_allele/{variant_id}_{allele}_{sep}_{orient}_out.txt',
         forward = 'results/{variant_id}/primer3/ref_allele/{variant_id}_{allele}_{sep}_{orient}.for',
         rev = 'results/{variant_id}/primer3/ref_allele/{variant_id}_{allele}_{sep}_{orient}.rev'
+    params:
+        preset_conf = config['conf_primer_discriminative']
     conda:
         '../envs/primer3.yaml'
     log:
@@ -82,7 +86,7 @@ rule primer3_search:
     shell:
         """
         primer3_core --output={output.out} \
-        --p3_settings_file resources/primer_discriminative.txt \
+        --p3_settings_file {params[preset_conf]} \
         {input.primer3_in} 2> {log} && \
         mv {wildcards.variant_id}_{wildcards.allele}_{wildcards.sep}_{wildcards.orient}.for {output.forward}
         mv {wildcards.variant_id}_{wildcards.allele}_{wildcards.sep}_{wildcards.orient}.rev {output.rev}

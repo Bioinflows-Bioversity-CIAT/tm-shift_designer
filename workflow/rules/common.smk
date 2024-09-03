@@ -67,7 +67,6 @@ def read_fasta(file_path):
     return sequences[current_sequence]
 
 def get_all_primers():
-    print("test")
     paths = list()
     for n, row in variants.iterrows():
         directory = 'results/{variant_id}/summary'.format(variant_id = n)
