@@ -8,7 +8,7 @@ window_length: 50
 max_dist: 20
 
 # Primer3 preset settings for primer discriminative
-conf_primer_discriminative: resources/primer_discriminative.txt
+conf_primer_discriminative: config/primer_discriminative.txt
 
 # Primer3 preset settings for alternative primer check
-conf_primercheck: resources/primer_check.txt
+conf_primercheck: config/primer_check.txt
