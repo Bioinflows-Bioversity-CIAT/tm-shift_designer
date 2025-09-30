@@ -1,7 +1,7 @@
 # Path to assembly units sheet
 assemblies_units_path: config/assembly_units.txt
 # Path to target variants sheet
-target_variants_path: config/target_variants.txt
+target_variants_path: config/tg_varians_FFARV3.txt
 # Window length (in pb) to define the roi
 window_length: 50
 # Maxmimun distance in pb to search common primers

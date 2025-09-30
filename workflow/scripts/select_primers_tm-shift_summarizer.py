@@ -224,11 +224,11 @@ for file in glob.glob(snakemake.params.basedir + f"/ref_allele/{snakemake.wildca
         name = file.split('/')[-1][:-4]
         params = name.split('_')
     
-        orientation = params[4]
+        orientation = params[-1]
         for n, row in read_primer3_out(file).iterrows():
             primer = Common(snakemake.wildcards.variant_id)
             primer.load(row, primer_type, orientation)
-            primer.dist = params[3]
+            primer.dist = params[-2]
             if primer.temperature_filter():
                 common[orientation].append(primer)
             else:

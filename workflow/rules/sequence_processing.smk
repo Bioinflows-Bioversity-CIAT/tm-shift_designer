@@ -1,3 +1,19 @@
+rule index_genome:
+    input:
+        ref = get_assembly_path,
+    output:
+        fasta = 'results/references/{ref_name}.fa.gz',
+        index = 'results/references/{ref_name}.fa.gz.fai',
+    log:
+        'results/log/genomes/{ref_name}_indexing.log'
+    conda:
+        '../envs/primer3.yaml'
+    shell:
+        """
+        cat {input.ref}| bgzip > {output.fasta} && \
+        samtools faidx {output.fasta} 2> {log}
+        """
+        
 rule extract_roi:
     input:
         ref = get_assembly,

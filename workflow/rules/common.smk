@@ -50,6 +50,9 @@ def get_assembly(wildcards):
     info = get_variant_info(wildcards)
     return assemblies.loc[info['assembly_id']].path
 
+def get_assembly_path(wildcards):
+    return assemblies.loc[wildcards.ref_name].path
+
 def read_fasta(file_path):
     sequences = {}
     current_sequence = None

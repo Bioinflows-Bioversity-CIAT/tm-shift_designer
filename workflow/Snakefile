@@ -5,6 +5,9 @@ rule all:
     input:
         primers = get_all_primers()
 
+rule index_genomes:
+    input:
+        expand('results/references/{ref_name}.fa.gz.fai', ref_name = assemblies['assembly_id'].tolist())
 
 include: "rules/sequence_processing.smk"
 include: "rules/primer_search.smk"
